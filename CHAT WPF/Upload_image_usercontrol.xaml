@@ -13,9 +13,7 @@
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <Border Width="100" Height="100">
-                <Border.Background>
-                    <ImageBrush x:Name="PictureImageBrush" ImageSource="Asset/file_icon.png"/>
-                </Border.Background>
+                <Image x:Name="PictureImage" Source="Asset/file_icon.png"></Image>
             </Border>
             <Grid Grid.Column="2">
                 <Button x:Name="CancelButton" Click="_Event_CancelButton_Clicked" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF616365">

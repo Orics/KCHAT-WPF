@@ -1,8 +1,11 @@
-﻿using CHAT_WPF.Models;
+﻿using CHAT_WPF.GUIs;
+using CHAT_WPF.Models;
 using CHAT_WPF.Services;
+using CHAT_WPF.Utilities;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,35 +28,86 @@ namespace CHAT_WPF
     /// </summary>
     public partial class MessageContainer : UserControl
     {
+        #region properties
+
+        private DateTime LoadedTime;
+        private DateTime SeenTime;
         public KeyValuePair<string, ConversationModel> Model { get; set; }
 
-        public MessageContainer()
+        #endregion
+
+
+        #region contructor
+
+        public MessageContainer(KeyValuePair<string, ConversationModel> model)
         {
             InitializeComponent();
-
-            this.ConversationScrollContainer.ScrollToEnd();
+            Model = model;
+            Load();
+            OnAsyns();
         }
 
-        public void Load(KeyValuePair<string, ConversationModel> Model)
+        #endregion
+
+
+        #region methods
+
+        private void OnAsyns()
         {
-            this.Model = Model;
-            Load();
-            InitializaEventsOnAsyns();
+            Service.Client.OnAsync(
+                path: "Conversations/" + Model.Key + "/ChangedTime",
+                changed: (s, args, context) =>
+                {
+                    if (DateTime.Parse(args.Data) > this.LoadedTime)
+                    {
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            LoadChange(ConversationService.GetConversationById(Model.Key));
+                        });
+                    }
+                }
+            );
+        }
+
+        public void LoadChange(KeyValuePair<string, ConversationModel> model)
+        {
+            // Load new recived messages
+            var messages = model.Value.Messages.Where(m => m.Value.SendTime > this.LoadedTime && m.Value.UserID != Service.UserID)
+                                               .OrderBy(m => m.Value.SendTime)
+                                               .ToDictionary(m => m.Key, m => m.Value);
+            if(messages.Count > 0)
+            {
+                foreach (var message in messages)
+                {
+                    this.MessageContainer1.Children.Add(
+                        new UserControlMessageReceived()
+                        {
+                            Model = message
+                        }
+                    );
+                }
+
+                // update model
+                this.Model = model;
+                // update loaded time
+                this.LoadedTime = messages.Values.Last<MessageModel>().SendTime;
+
+            } 
         }
 
         public void Load()
         {
+            // Load conversation title
+
+            // Load conversation avatar
+
+            // Load messages
             this.MessageContainer1.Children.Clear();
             foreach (var message in Model.Value.Messages.OrderBy(m => m.Value.SendTime))
             {
                 if (message.Value.UserID == UserService.UserID)
                 {
-                    this.MessageContainer1.Children.Add(
-                       new UserControlMessageSent()
-                       {
-                           Model = message
-                       }
-                   );
+                    this.MessageContainer1.Children.Add(new SentMessageControl(message));
                 }
                 else
                 {
@@ -63,83 +117,70 @@ namespace CHAT_WPF
                             Model = message
                         }
                     );
-                   
+
                 }
             }
+
+            // Load system emojis
+            if (SystemValues.Emojis != null)
+            {
+                foreach (var emoji in SystemValues.Emojis)
+                {
+                   // SystemEmojisContainer.Children.Add(new EmojiControl(this, emoji));
+                }
+            }
+
+            // Load system stickers
+            if (SystemValues.Stickers != null)
+            {
+                foreach (var sticker in SystemValues.Stickers)
+                {
+                   // SystemStickerContainer.Children.Add(new StickerControl(this, sticker));
+                }
+            }  
+
+            this.LoadedTime = DateTime.Now;
         }
 
-        public void InitializaEventsOnAsyns()
+        private void ResetMessageInput()
         {
-            Service.Client.OnAsync(
-            path: "Conversations/" + Model.Key + "/Messages",
-            added: (s, args, context) =>
-            {
-                Model = ConversationService.GetConversationById(Model.Key);
-                this.Dispatcher.Invoke(() =>
-                {
-                    Load();
-                });
-
-            },
-            removed: (s, args, context) =>
-            {
-                Model = ConversationService.GetConversationById(Model.Key);
-                this.Dispatcher.Invoke(() =>
-                {
-                    Load();
-                });
-            }
-            );
+            MessageFilesContainer.Children.Clear();
+            MessageImagesContainer.Children.Clear();
+            ConversationInput.Text = "";
         }
 
-        private void SendMessage()
+        #endregion
+
+
+        #region events
+
+        private void _EventClickSendMessage(object sender, RoutedEventArgs e)
         {
-            List<MessageFileModel> Files = new List<MessageFileModel>();
-            foreach (Upload_file_usercontrol file in MessageFilesContainer.Children)
+            List<MessageUploadFileModel> Files = new List<MessageUploadFileModel>();
+            foreach (UploadFileControl file in MessageFilesContainer.Children)
             {
-                Files.Add(new MessageFileModel()
-                {
-                    ConversationID = file.Model.ConversationID,
-                    FileName = file.Model.FileName,
-                    DowloadUrl = file.Model.DowloadUrl
-                });
+                Files.Add(file.Model);
             }
 
-            List<MessageFileModel> Images = new List<MessageFileModel>();
-            foreach (Upload_image_usercontrol file in MessageImagesContainer.Children)
+            List<MessageUploadFileModel> Images = new List<MessageUploadFileModel>();
+            foreach (UploadImageControl file in MessageImagesContainer.Children)
             {
-                Images.Add(new MessageFileModel()
-                {
-                    ConversationID = file.Model.ConversationID,
-                    FileName = file.Model.FileName,
-                    DowloadUrl = file.Model.DowloadUrl
-                });
+                Images.Add(file.Model);
             }
 
-
-            MessageModel message = new MessageModel()
+            UnsentMessageModel message = new UnsentMessageModel()
             {
                 UserID = Service.UserID,
-                SendTime = DateTime.Now,
-                Text = new TextRange(ConversationInput.Document.ContentStart, ConversationInput.Document.ContentEnd).Text,
+                ConversationID = Model.Key,
+                Text = ConversationInput.Text,
                 Files = Files,
                 Images = Images,
             };
 
-            ConversationService.SendMessageToConversation(Model.Key, message);
-        }
+            this.MessageContainer1.Children.Add(new SentMessageControl(message));
 
-
-
-        private void _EventClickSendMessage(object sender, RoutedEventArgs e)
-        {
-            SendMessage();
-        }
-
-        private void _KeyDown(object sender, KeyEventArgs e)
-        {
-            
-            
+            // reset input
+            ResetMessageInput();
         }
 
         private void _Event_UploadFileButton_Clicked(object sender, RoutedEventArgs e)
@@ -150,12 +191,11 @@ namespace CHAT_WPF
 
             if (dialog.ShowDialog() == true)
             {
-                var control = new Upload_file_usercontrol(new MessageUploadFileModel()
-                {   
+                var control = new UploadFileControl(new MessageUploadFileModel()
+                {
                     ConversationID = Model.Key,
                     FileName = System.IO.Path.GetFileName(dialog.FileName),
                     FilePath = dialog.FileName,
-                    Source = dialog.OpenFile(),
                 });
 
                 MessageFilesContainer.Children.Add(control);
@@ -165,21 +205,69 @@ namespace CHAT_WPF
         private void _Event_UploadImageButton_Clicked(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Files | *.jpg; *.jpeg; *.png";
+            dialog.Filter = "Files | *.jpg; *.jpeg; *.png;";
             dialog.FilterIndex = 1;
 
             if (dialog.ShowDialog() == true)
             {
-                var control = new Upload_image_usercontrol(new MessageUploadFileModel()
+                var control = new UploadImageControl(new MessageUploadFileModel()
                 {
                     ConversationID = Model.Key,
                     FileName = System.IO.Path.GetFileName(dialog.FileName),
                     FilePath = dialog.FileName,
-                    Source = dialog.OpenFile(),
                 });
 
                 MessageImagesContainer.Children.Add(control);
             }
         }
+
+        private void _Event_ConversationInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                if (ConversationInput.Text.Contains(":"))
+                {
+                    var code = ConversationInput.Text.Substring(ConversationInput.Text.LastIndexOf(':'));
+                    var emoji = Ultilities.ConvertCodeToEmoji(code);
+                    if (emoji != null)
+                    {
+                        ConversationInput.Text = ConversationInput.Text.Replace(code, emoji);
+                        ConversationInput.SelectionStart = ConversationInput.Text.Length;
+                    }
+                }
+                
+            }
+        }
+
+        private void _Event_UploadEmojiButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            if(EmojiTab.Visibility == Visibility.Visible)
+            {
+                EmojiTab.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                EmojiTab.Visibility = Visibility.Visible;
+                StickerTab.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void _Event_UploadStickerButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (StickerTab.Visibility == Visibility.Visible)
+            {
+                StickerTab.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                StickerTab.Visibility = Visibility.Visible;
+                EmojiTab.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        #endregion
+
+        
+
     }
 }

@@ -11,7 +11,6 @@ namespace CHAT_WPF.Models
     {
         public string ConversationID { get; set; }
         public string FileName { get; set; }
-        public string Url { get; set; }
         public string DowloadUrl { get; set; }
     }
 }

@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="CHAT_WPF.GUIs.ConversationInvitationItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CHAT_WPF.GUIs"
+             mc:Ignorable="d">
+    <Grid HorizontalAlignment="Center" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Width="40" Height="40" CornerRadius="25" BorderBrush="White" BorderThickness="0.6">
+            <Border.Background>
+                <ImageBrush x:Name="Avatar" ImageSource="/Asset/3.jpg"/>
+            </Border.Background>
+        </Border>
+        <WrapPanel Grid.Column="1" VerticalAlignment="Center" >
+            <TextBlock x:Name="FullName" TextWrapping="Wrap" Text="Nguyen Ba huynh" FontSize="15" Foreground="Black"/>
+        </WrapPanel>
+        <Button x:Name="InviteButton" Click="_Event_InviteButton_Click" Padding="0" Margin="0" Height="23" BorderThickness="0" Grid.Column="2" Content="invite" >
+            
+        </Button>
+
+    </Grid>
+</UserControl>

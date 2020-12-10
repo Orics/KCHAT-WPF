@@ -12,7 +12,16 @@ namespace CHAT_WPF.Models
         public string ConversationID { get; set; }
         public string FileName { get; set; }
         public string FilePath { get; set; }
-        public Stream Source { get; set; }
         public string DowloadUrl { get; set; }
+
+        public MessageFileModel ConvertToMessageFileModel()
+        {
+            return new MessageFileModel()
+            {
+                ConversationID = ConversationID,
+                FileName = FileName,
+                DowloadUrl = DowloadUrl,
+            };
+        }
     }
 }

@@ -283,6 +283,60 @@
     <Compile Include="FileTab.xaml.cs">
       <DependentUpon>FileTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUIs\BigLoadingControl.xaml.cs">
+      <DependentUpon>BigLoadingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\ConversationBoxControl.xaml.cs">
+      <DependentUpon>ConversationBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\ConversationInvitationRequestControl.xaml.cs">
+      <DependentUpon>ConversationInvitationRequestControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\ConversationTabControl.xaml.cs">
+      <DependentUpon>ConversationTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\ConversationUserEnteringControl.xaml.cs">
+      <DependentUpon>ConversationUserEnteringControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\ConversationInvitationItemControl.xaml.cs">
+      <DependentUpon>ConversationInvitationItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\ConversationInvitationWindow.xaml.cs">
+      <DependentUpon>ConversationInvitationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\MessageFileControl.xaml.cs">
+      <DependentUpon>MessageFileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\MessageImageControl.xaml.cs">
+      <DependentUpon>MessageImageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\MessageStickerControl.xaml.cs">
+      <DependentUpon>MessageStickerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\ReceivedMessageControl.xaml.cs">
+      <DependentUpon>ReceivedMessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\SentMessageControl.xaml.cs">
+      <DependentUpon>SentMessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\SmallLoadingControl.xaml.cs">
+      <DependentUpon>SmallLoadingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\EmojiControl.xaml.cs">
+      <DependentUpon>EmojiControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\SystemMesageControl.xaml.cs">
+      <DependentUpon>SystemMesageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\StickerControl.xaml.cs">
+      <DependentUpon>StickerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\UploadFileControl.xaml.cs">
+      <DependentUpon>UploadFileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\UploadImageControl.xaml.cs">
+      <DependentUpon>UploadImageControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="icon_emoji_usercontrol.xaml.cs">
       <DependentUpon>icon_emoji_usercontrol.xaml</DependentUpon>
     </Compile>
@@ -322,11 +376,17 @@
     <Compile Include="MessageTab.xaml.cs">
       <DependentUpon>MessageTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConversationInvitationModel.cs" />
     <Compile Include="Models\ConversationModel.cs" />
+    <Compile Include="Models\FriendshipInvitationModel.cs" />
+    <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\MessageTabModel.cs" />
     <Compile Include="Models\MessageFileModel.cs" />
     <Compile Include="Models\MessageUploadFileModel.cs" />
+    <Compile Include="Models\NotificationModel.cs" />
+    <Compile Include="Models\SystemNotificationModel.cs" />
+    <Compile Include="Models\UnsentMessageModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="NotificationBox.xaml.cs">
       <DependentUpon>NotificationBox.xaml</DependentUpon>
@@ -341,7 +401,9 @@
       <DependentUpon>RecentFile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\ConversationService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\StorageService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SuggestFriendControl.xaml.cs">
       <DependentUpon>SuggestFriendControl.xaml</DependentUpon>
@@ -359,6 +421,8 @@
       <DependentUpon>UserControlMessageSent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\KDateTime.cs" />
+    <Compile Include="Utilities\SystemValues.cs" />
+    <Compile Include="Utilities\Ultilities.cs" />
     <Page Include="Addfriend.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -388,6 +452,78 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FileTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\BigLoadingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\ConversationBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\ConversationInvitationRequestControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\ConversationTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\ConversationUserEnteringControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\ConversationInvitationItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\ConversationInvitationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\MessageFileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\MessageImageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\MessageStickerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\ReceivedMessageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\SentMessageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\SmallLoadingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\EmojiControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\SystemMesageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\StickerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\UploadFileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUIs\UploadImageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -565,6 +701,7 @@
     <Resource Include="Asset\messenger3.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Asset\working.gif" />
     <Resource Include="notification-bell-incoming-inbox-message_156780-34.jpg" />
     <Resource Include="set-persons-avatars-people_111701-352.jpg" />
     <Resource Include="people-avatars-collection_23-2148466866.jpg" />
@@ -579,10 +716,42 @@
     <Resource Include="Asset\bell.png" />
     <Resource Include="Asset\Capture.PNG" />
     <Resource Include="Asset\Capture1.PNG" />
+    <Resource Include="Asset\FileIcons\.ai.png" />
+    <Resource Include="Asset\FileIcons\.css.png" />
+    <Resource Include="Asset\FileIcons\.docx.png" />
+    <Resource Include="Asset\FileIcons\.jpeg.png" />
+    <Resource Include="Asset\FileIcons\.mp3.png" />
+    <Resource Include="Asset\FileIcons\.mp4.png" />
+    <Resource Include="Asset\FileIcons\.pdf.png" />
+    <Resource Include="Asset\FileIcons\.png.png" />
+    <Resource Include="Asset\FileIcons\.pptx.png" />
+    <Resource Include="Asset\FileIcons\.psd.png" />
+    <Resource Include="Asset\FileIcons\.rar.png" />
+    <Resource Include="Asset\FileIcons\.readme.png" />
+    <Resource Include="Asset\FileIcons\.txt.png" />
+    <Resource Include="Asset\FileIcons\.xlsx.png" />
+    <Resource Include="Asset\FileIcons\.zip.png" />
+    <Resource Include="Asset\FileIcons\unknown.png" />
+    <Resource Include="Asset\tumblr_mip1eiTLD41rntwilo1_500.gif" />
+    <Resource Include="Asset\bomb-once.gif" />
+    <Resource Include="Asset\bomb.gif" />
+    <Resource Include="Asset\earth.gif" />
+    <Resource Include="Asset\monster.gif" />
+    <Resource Include="Asset\nonanimated.png" />
+    <Resource Include="Asset\partialfirstframe.gif" />
+    <Resource Include="Asset\pause.png" />
+    <Resource Include="Asset\play.png" />
+    <Resource Include="Asset\radar.gif" />
+    <Resource Include="Asset\siteoforigin.gif" />
     <Content Include="Asset\VD.mp4" />
     <Resource Include="Homess.jpg" />
     <Resource Include="Asset\zxc %281%29.jpg" />
     <Resource Include="Asset\zxc %282%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WpfAnimatedGif">
+      <Version>2.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets')" />

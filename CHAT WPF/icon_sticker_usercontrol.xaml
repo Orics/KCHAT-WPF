@@ -6,10 +6,8 @@
              xmlns:local="clr-namespace:CHAT_WPF"
              mc:Ignorable="d" >
     <Grid>
-        <Border Width="70" Height="70" BorderBrush="White" BorderThickness="0.5">
-            <Border.Background>
-                <ImageBrush ImageSource="Asset/1.jpg"/>
-            </Border.Background>
+        <Border Width="50" Height="50" Margin="2" BorderBrush="White" BorderThickness="0.5">
+            <Image x:Name="StickerImage"></Image>
         </Border>
     </Grid>
 </UserControl>

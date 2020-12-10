@@ -37,8 +37,7 @@ namespace CHAT_WPF
             
             var task = Service.Storage.Child(Model.ConversationID)
                                       .Child(Model.FileName)
-                                      .PutAsync(Model.Source);
-
+                                      .PutAsync(File.OpenRead(Model.FilePath));
             
             task.Progress.ProgressChanged += (s, e) => { MaterialDesignThemes.Wpf.ButtonProgressAssist.SetValue(UploadProcess, e.Percentage);};
 

@@ -41,8 +41,8 @@
             </Grid>
             <StackPanel x:Name="ConversationListBox"></StackPanel>
         </StackPanel>
-        <Grid Grid.Column="1" Background="#FFE4E4E4">
-            <local:MessageContainer x:Name="MessageContainer" Visibility="Hidden"></local:MessageContainer>
+        <Grid x:Name="CurrentConversationContainer" Grid.Column="1" Background="#FFE4E4E4">
+            
         </Grid>
     </Grid>
 </UserControl>

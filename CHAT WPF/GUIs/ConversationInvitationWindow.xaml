@@ -1,0 +1,25 @@
+﻿<Window x:Class="CHAT_WPF.GUIs.ConversationInvitationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CHAT_WPF.GUIs"
+        mc:Ignorable="d"
+        Title="InviteToConversationWindow" Height="600" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Height="40" Margin="10" CornerRadius="20" Background="LightGray">
+            <TextBox x:Name="SearchInputTextBox" Margin="20 0" VerticalAlignment="Center" FontSize="15" BorderThickness="0" ></TextBox>
+        </Border>
+        <WrapPanel Name="InvitedUsersContainer" Grid.Row="1">
+              
+        </WrapPanel>
+        <StackPanel x:Name="SearchResultsContainer" Grid.Row="2" Orientation="Vertical" VerticalAlignment="Top">
+            
+        </StackPanel>
+    </Grid>
+</Window>

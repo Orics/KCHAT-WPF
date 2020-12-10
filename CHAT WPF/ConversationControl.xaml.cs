@@ -1,4 +1,5 @@
-﻿using CHAT_WPF.Models;
+﻿using CHAT_WPF.GUIs;
+using CHAT_WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,14 @@ using System.Windows.Shapes;
 namespace CHAT_WPF
 {
     /// <summary>
-    /// Interaction logic for ConversationControl.xaml
+    /// Interaction logic for ConversationBoxControl.xaml
     /// </summary>
     public partial class ConversationControl : UserControl
     {
 
         public KeyValuePair<string, ConversationModel> Model { get; set; }
 
-        public MessageTab ConversationTab { get; set; }
+        public ConversationTabControl ConversationTab { get; set; }
 
         public ConversationControl()
         {

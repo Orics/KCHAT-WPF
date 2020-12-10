@@ -1,5 +1,6 @@
 ﻿using CHAT_WPF.Models;
 using CHAT_WPF.Services;
+using CHAT_WPF.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +28,15 @@ namespace CHAT_WPF
         public MainWindow()
         {
             InitializeComponent();
+            InitSystemValues();
         }
+
+        private void InitSystemValues()
+        {
+            SystemValues.Emojis = ConversationService.GetAllSystemEmojis();
+            SystemValues.Stickers = ConversationService.GetAllSystemStickers();
+        }
+
         private void btn_close_mainwindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
@@ -69,7 +78,6 @@ namespace CHAT_WPF
         {
             Application.Current.Shutdown();
         }
-
 
         private void OpenUpdateAccountInfor(object sender, MouseButtonEventArgs e)
         {

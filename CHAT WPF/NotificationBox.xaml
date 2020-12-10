@@ -7,7 +7,7 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             mc:Ignorable="d"
             Height="600" Width="730">
-    <Grid Background="#FFE4E4E4">
+    <Grid Loaded="_Event_Loaded" Background="#FFE4E4E4">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -37,7 +37,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="1">
+        <StackPanel x:Name="NotificationContainer" Grid.Row="1">
             <local:NotificationList></local:NotificationList>
         </StackPanel>
     </Grid>

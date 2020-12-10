@@ -4,7 +4,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="clr-namespace:CHAT_WPF.GUIs"
         mc:Ignorable="d"
         Height="600" Width="1080" ResizeMode="NoResize"
         Icon="Asset/messenger3.png"
@@ -311,7 +311,7 @@
                         <local:NotificationTab></local:NotificationTab>
                     </Grid>
                     <Grid x:Name="Message_sc" Grid.Row="0" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
-                        <local:MessageTab></local:MessageTab>
+                        <local1:ConversationTabControl></local1:ConversationTabControl>
                     </Grid>
 
                 </Grid>

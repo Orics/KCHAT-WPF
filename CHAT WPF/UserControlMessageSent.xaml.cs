@@ -1,4 +1,5 @@
-﻿using CHAT_WPF.Models;
+﻿using CHAT_WPF.GUIs;
+using CHAT_WPF.Models;
 using CHAT_WPF.Utilities;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,13 @@ namespace CHAT_WPF
     {
         public KeyValuePair<string, MessageModel> Model { get; set; }
 
-        public UserControlMessageSent()
+        public UserControlMessageSent(KeyValuePair<string, MessageModel> model)
         {
             InitializeComponent();
             this.HorizontalAlignment = HorizontalAlignment.Right;
+
+            Model = model;
+            Load();
         }
 
         private void Load()
@@ -35,7 +39,22 @@ namespace CHAT_WPF
             if (Model.Value != null)
             {
                 this.Content.Text = Model.Value.Text;
-                this.SendTime.Text = KDateTime.ConverToTimeDisplay(Model.Value.SendTime);
+
+                if (Model.Value.Images != null)
+                {
+                    foreach (MessageFileModel file in Model.Value.Images)
+                    {
+                        this.MessageImagesContainer.Children.Add(new MessageImageControl(file));
+                    }
+                }
+
+                if (Model.Value.Files != null)
+                {
+                    foreach (MessageFileModel file in Model.Value.Files)
+                    {
+                        this.MessageFilesContainer.Children.Add(new MessageFileControl(file));
+                    }
+                }
             }
         }
 
@@ -45,20 +64,6 @@ namespace CHAT_WPF
             Load();
         }
 
-        private void Loaded(object sender, RoutedEventArgs e)
-        {
-            Load();
-        }
 
-        private void ShowTime(object sender, MouseEventArgs e)
-        {
-            //this.SendTime.Text = KDateTime.ConverToTimeDisplay(Model.SendTime);
-            //this.SendTime.Visibility = Visibility.Visible;
-        }
-
-        private void HideTime(object sender, MouseEventArgs e)
-        {
-            this.SendTime.Visibility = Visibility.Hidden;
-        }
     }
 }

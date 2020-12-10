@@ -1,5 +1,6 @@
 ﻿using CHAT_WPF.Models;
 using CHAT_WPF.Services;
+using CHAT_WPF.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,17 +40,16 @@ namespace CHAT_WPF
             var task = Service.Storage
                               .Child(Model.ConversationID)
                               .Child(Model.FileName)
-                              .PutAsync(Model.Source);
+                              .PutAsync(File.OpenRead(Model.FilePath));
 
             task.Progress.ProgressChanged += (s, e) => { MaterialDesignThemes.Wpf.ButtonProgressAssist.SetValue(UploadProcess, e.Percentage); };
 
-            PictureImageBrush.ImageSource = new BitmapImage(new Uri(Model.FilePath));
+            PictureImage.Source = new BitmapImage(new Uri(Model.FilePath));
 
             Model.DowloadUrl = await task;
 
             UploadProcess.Visibility = Visibility.Hidden;
         }
-
 
         private void RemoveFile()
         {
@@ -57,6 +57,7 @@ namespace CHAT_WPF
                                       .Child(Model.FileName)
                                       .DeleteAsync();
         }
+
 
         private void _Event_CancelButton_Clicked(object sender, RoutedEventArgs e)
         {

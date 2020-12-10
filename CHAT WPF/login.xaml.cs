@@ -93,7 +93,7 @@ namespace CHAT_WPF
             {
                 if (!UserService.CheckUsernameDuplicate(R_Username.Text))
                 {
-                    if (!string.IsNullOrEmpty(Password.Password))
+                    if (!string.IsNullOrEmpty(R_Password.Password))
                     {
                         if (!string.IsNullOrEmpty(R_Phone.Text))
                         {
@@ -101,16 +101,19 @@ namespace CHAT_WPF
                             {
                                 return true;
                             }
-
+                            else
+                            {
+                                MessageBox.Show("Email khong hop le");
+                            }
                         }
                         else
                         {
-
+                            MessageBox.Show("Phone khong hop le");
                         }
                     }
                     else
                     {
-
+                        MessageBox.Show("Password khong hop le");
                     }
                 }
                 else
@@ -120,7 +123,7 @@ namespace CHAT_WPF
             }
             else
             {
-
+                MessageBox.Show("Username khong hop le");
             }
             return false;
         }
@@ -128,17 +131,18 @@ namespace CHAT_WPF
         private void Register(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Đăng ký !");
+            new UserService();
             if (CheckValidate())
             {
                 UserService.Register(new UserModel()
                 {
-                    Username = Username.Text,
+                    Username = R_Username.Text,
+                    Fullname = R_Fullname.Text,
                     Password = R_Password.Password,
                     Phone = R_Phone.Text,
                     Email = R_Email.Text
                 });
             }
-
         }
 
         private void close_login_Click(object sender, RoutedEventArgs e)

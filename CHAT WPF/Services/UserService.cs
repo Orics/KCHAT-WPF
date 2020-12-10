@@ -23,7 +23,7 @@ namespace CHAT_WPF.Services
                                 
                 if (node.Value != null)
                 {
-                    UserID = node.Value.ID;
+                    UserID = node.Key;
                     return node.Value;
                 }
             }
@@ -47,10 +47,11 @@ namespace CHAT_WPF.Services
 
         }
 
-        public static bool CheckUsernameDuplicate(string Username)
+        public static bool CheckUsernameDuplicate(string username)
         {
             var user = Client.Get("Users").ResultAs<Dictionary<string, UserModel>>()
-                               .Where(u => u.Value.Username == Username).FirstOrDefault();
+                             .Where(u => u.Value.Username == username).FirstOrDefault();
+
             if (user.Key == null || user.Value == null)
             {
                 return false;
@@ -99,6 +100,12 @@ namespace CHAT_WPF.Services
         public static UserModel GetUserByPhone(string Phone)
         {
             return null;
+        }
+
+        public static Dictionary<string, UserModel> GetAllUsers()
+        {
+            var users =  Client.Get("Users").ResultAs<Dictionary<string, UserModel>>().ToDictionary(u => u.Key, u => u.Value);
+            return users;
         }
     }
 }

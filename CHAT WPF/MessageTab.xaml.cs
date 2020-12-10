@@ -24,9 +24,13 @@ namespace CHAT_WPF
         {
             if (!string.IsNullOrEmpty(ConversationID))
             {
-                Model.CurrentConversation = ConversationService.GetConversationById(ConversationID); ;
-                this.MessageContainer.Load(Model.CurrentConversation);
-                this.MessageContainer.Visibility = Visibility.Visible;
+               // Model.CurrentConversation = ConversationService.GetConversationById(ConversationID);
+
+                CurrentConversationContainer.Children.Clear();
+
+                CurrentConversationContainer.Children.Add(
+                    new CHAT_WPF.GUIs.ConversationBoxControl(ConversationID)
+                );
             }
             else
             {
@@ -111,16 +115,19 @@ namespace CHAT_WPF
 
             //load list conversations
             this.ListConversationsContainer.Children.Clear();
-            foreach (var conversarion in Model.Conversations)
+            if (Model.Conversations != null)
             {
-                this.ListConversationsContainer.Children.Add(
-                    new ConversationControl()
-                    {
-                        Model = conversarion,
-                        ConversationTab = this
-                    }
-                );           
-            }
+                foreach (var conversarion in Model.Conversations)
+                {
+                    this.ListConversationsContainer.Children.Add(
+                        new ConversationControl()
+                        {
+                            Model = conversarion,
+                           // ConversationTab = this
+                        }
+                    );
+                }
+            } 
         }
 
     }
